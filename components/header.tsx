@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { Fragment } from 'react'
 import { navGroups } from '@/lib/navigation'
 import type { SessionUser } from '@/lib/auth'
 import { MobileNav } from '@/components/mobile-nav'
@@ -48,22 +47,20 @@ export function Header({ user }: { user: SessionUser }) {
       <div className="ml-auto flex items-center gap-2">
         <ThemeToggle />
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 rounded-md px-1.5 py-1 hover:bg-muted">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary text-xs font-semibold text-primary-foreground">
-                  {initials.toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="hidden text-left sm:block">
-                <p className="text-sm font-medium leading-tight">
-                  {user.nombre} {user.apellido}
-                </p>
-                <p className="font-mono text-[11px] leading-tight text-muted-foreground">
-                  #{user.legajo}
-                </p>
-              </div>
-            </button>
+          <DropdownMenuTrigger className="flex items-center gap-2 rounded-md px-1.5 py-1 hover:bg-muted">
+            <Avatar className="h-8 w-8">
+              <AvatarFallback className="bg-primary text-xs font-semibold text-primary-foreground">
+                {initials.toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="hidden text-left sm:block">
+              <p className="text-sm font-medium leading-tight">
+                {user.nombre} {user.apellido}
+              </p>
+              <p className="font-mono text-[11px] leading-tight text-muted-foreground">
+                #{user.legajo}
+              </p>
+            </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>
@@ -81,23 +78,17 @@ export function Header({ user }: { user: SessionUser }) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <form action={logoutAction}>
-              <button type="submit" className="w-full">
-                <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
-                  className="cursor-pointer text-destructive focus:text-destructive"
-                  asChild
-                >
-                  <span className="flex w-full items-center">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Cerrar sesión
-                  </span>
-                </DropdownMenuItem>
-              </button>
+              <DropdownMenuItem
+                render={<button type="submit" />}
+                className="w-full cursor-pointer text-destructive focus:text-destructive"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Cerrar sesión
+              </DropdownMenuItem>
             </form>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Fragment />
     </header>
   )
 }
